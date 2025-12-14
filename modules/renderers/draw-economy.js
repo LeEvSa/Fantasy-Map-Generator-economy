@@ -152,24 +152,21 @@ function toggleEconomy(event) {
     return;
   }
   
-  const economyGroup = document.getElementById("economy");
-  if (!economyGroup) return;
-  
   const button = document.getElementById("toggleEconomy");
   const isOn = button && !button.classList.contains("buttonoff");
   
   if (isOn) {
-    economyGroup.style.display = "none";
+    const economyGroup = document.getElementById("economy");
+    if (economyGroup) economyGroup.style.display = "none";
     if (button) button.classList.add("buttonoff");
   } else {
     if (!pack.cells.wealth) {
-      if (!pack.cells.resource) {
-        Resources.generate();
-      }
+      if (!pack.cells.resource) Resources.generate();
       Economy.initialize();
     }
     drawEconomy();
-    economyGroup.style.display = "block";
+    const economyGroup = document.getElementById("economy");
+    if (economyGroup) economyGroup.style.display = "block";
     if (button) button.classList.remove("buttonoff");
   }
 }

@@ -2,6 +2,8 @@
 
 window.Resources = (function () {
   const RESOURCE_TYPES = {
+    food: {id: 13, name: "Food", color: "#e67e22", icon: "🍞", biomes: [5, 6, 7, 8], baseValue: 1, minHeight: 20, maxHeight: 50},
+    wood: {id: 14, name: "Wood", color: "#2d5016", icon: "🪵", biomes: [4, 5, 6, 8, 9], baseValue: 2, minHeight: 20, maxHeight: 70},
     grain: {id: 1, name: "Grain", color: "#f4d03f", icon: "🌾", biomes: [5, 6, 7, 8], baseValue: 2, minHeight: 20, maxHeight: 50},
     timber: {id: 2, name: "Timber", color: "#27ae60", icon: "🌲", biomes: [4, 5, 6, 8, 9], baseValue: 3, minHeight: 20, maxHeight: 70},
     iron: {id: 3, name: "Iron", color: "#7f8c8d", icon: "⛏️", biomes: [3, 4, 5, 10, 11], baseValue: 8, minHeight: 40, maxHeight: 90},

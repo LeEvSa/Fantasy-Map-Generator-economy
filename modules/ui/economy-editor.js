@@ -92,16 +92,50 @@ function getStateEconomiesHtml(economyData) {
   const states = Object.values(economyData.states);
   if (states.length === 0) return "<div>No states found</div>";
   
-  return states.map(state => `
-    <div style="padding: 5px; margin: 2px 0; background: #f9f9f9; border-radius: 3px;">
+  return states.map(state => {
+    const resourcesHtml = getStateTreasuryHtml(state.resources);
+    return `
+    <div style="padding: 8px; margin: 4px 0; background: #f9f9f9; border-radius: 3px; border-left: 3px solid #3498db;">
       <strong>${state.name}</strong>
-      <div style="font-size: 11px; color: #666;">
-        Treasury: ${Math.round(state.treasury).toLocaleString()} | 
+      <div style="font-size: 11px; color: #666; margin-top: 4px;">
+        Treasury: <span style="color: #27ae60; font-weight: bold;">${Math.round(state.treasury).toLocaleString()}</span> | 
         Income: ${Math.round(state.income).toLocaleString()} | 
         Trade: ${Math.round(state.tradeBalance).toLocaleString()}
       </div>
+      ${resourcesHtml}
     </div>
-  `).join("");
+  `;
+  }).join("");
+}
+
+function getStateTreasuryHtml(resources) {
+  if (!resources || Object.keys(resources).length === 0) {
+    return '<div style="font-size: 10px; color: #999; margin-top: 4px;">No resources</div>';
+  }
+  
+  const resourceTypes = Resources.getResourceTypes();
+  const resourceEntries = Object.entries(resources)
+    .map(([name, data]) => {
+      const resourceType = Object.values(resourceTypes).find(r => r.name === name);
+      return {
+        name,
+        icon: resourceType ? resourceType.icon : "",
+        amount: data.amount,
+        cells: data.cells
+      };
+    })
+    .sort((a, b) => b.amount - a.amount)
+    .slice(0, 5);
+  
+  return `
+    <div style="font-size: 10px; color: #555; margin-top: 4px; display: flex; flex-wrap: wrap; gap: 4px;">
+      ${resourceEntries.map(r => `
+        <span style="background: #e8f4fc; padding: 1px 4px; border-radius: 2px;">
+          ${r.icon} ${r.name}: ${Math.round(r.amount)}
+        </span>
+      `).join("")}
+    </div>
+  `;
 }
 
 function getResourceDistributionHtml() {

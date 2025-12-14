@@ -101,21 +101,18 @@ function toggleResources(event) {
     return;
   }
   
-  const resourcesGroup = document.getElementById("resources");
-  if (!resourcesGroup) return;
-  
   const button = document.getElementById("toggleResources");
   const isOn = button && !button.classList.contains("buttonoff");
   
   if (isOn) {
-    resourcesGroup.style.display = "none";
+    const resourcesGroup = document.getElementById("resources");
+    if (resourcesGroup) resourcesGroup.style.display = "none";
     if (button) button.classList.add("buttonoff");
   } else {
-    if (!pack.cells.resource) {
-      Resources.generate();
-    }
+    if (!pack.cells.resource) Resources.generate();
     drawResources();
-    resourcesGroup.style.display = "block";
+    const resourcesGroup = document.getElementById("resources");
+    if (resourcesGroup) resourcesGroup.style.display = "block";
     if (button) button.classList.remove("buttonoff");
   }
 }

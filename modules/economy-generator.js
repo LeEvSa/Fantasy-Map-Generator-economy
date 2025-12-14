@@ -56,7 +56,8 @@ window.Economy = (function () {
         treasury: 0,
         income: 0,
         expenses: 0,
-        tradeBalance: 0
+        tradeBalance: 0,
+        resources: {}
       };
       
       let totalWealth = 0;
@@ -66,6 +67,20 @@ window.Economy = (function () {
         if (cells.state[c] !== i) continue;
         totalWealth += cells.wealth[c];
         totalProduction += cells.production[c];
+        
+        const resourceId = cells.resource ? cells.resource[c] : 0;
+        const resourceAmount = cells.resourceAmount ? cells.resourceAmount[c] : 0;
+        if (resourceId > 0 && resourceAmount > 0) {
+          const resource = Resources.getResourceById(resourceId);
+          if (resource) {
+            const key = resource.name;
+            if (!economyData.states[i].resources[key]) {
+              economyData.states[i].resources[key] = {amount: 0, cells: 0};
+            }
+            economyData.states[i].resources[key].amount += resourceAmount;
+            economyData.states[i].resources[key].cells++;
+          }
+        }
       }
       
       economyData.states[i].treasury = totalWealth * 0.1;
