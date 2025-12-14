@@ -4,10 +4,6 @@ function editResources() {
   if (customization) return;
   closeDialogs("#resourcesEditor, .stable");
   if (!layerIsOn("toggleResources")) toggleResources();
-  if (layerIsOn("toggleStates")) toggleStates();
-  if (layerIsOn("toggleCultures")) toggleCultures();
-  if (layerIsOn("toggleReligions")) toggleReligions();
-  if (layerIsOn("toggleProvinces")) toggleProvinces();
 
   const body = document.getElementById("resourcesBody");
   refreshResourcesEditor();
@@ -149,6 +145,12 @@ function editResources() {
       .attr("stroke-width", 0);
   }
 
+  function redrawResourcesLayer() {
+    if (layerIsOn("toggleResources")) {
+      drawResources();
+    }
+  }
+
   function regenerateAllResources() {
     alertMessage.innerHTML = "Are you sure you want to regenerate all resources? This will replace all existing resources on the map.";
     $("#alert").dialog({
@@ -157,10 +159,7 @@ function editResources() {
       buttons: {
         Regenerate: function () {
           Resources.generate();
-          if (layerIsOn("toggleResources")) {
-            toggleResources();
-            toggleResources();
-          }
+          redrawResourcesLayer();
           refreshResourcesEditor();
           $(this).dialog("close");
         },
@@ -177,10 +176,7 @@ function editResources() {
     if (!resource) return;
     
     Resources.generate(key);
-    if (layerIsOn("toggleResources")) {
-      toggleResources();
-      toggleResources();
-    }
+    redrawResourcesLayer();
     refreshResourcesEditor();
     tip(`Regenerated ${resource.name} resources`);
   }
@@ -255,10 +251,7 @@ function editResources() {
       Resources.setResource(i, key, 1 + Math.random());
     }
     
-    if (layerIsOn("toggleResources")) {
-      toggleResources();
-      toggleResources();
-    }
+    redrawResourcesLayer();
   }
 
   function dragResourceBrush() {
@@ -289,6 +282,8 @@ function editResources() {
         Resources.setResource(i, key, 1 + Math.random());
       }
     });
+    
+    redrawResourcesLayer();
   }
 
   function moveResourceBrush() {
@@ -299,10 +294,7 @@ function editResources() {
   }
 
   function applyResourcesChange() {
-    if (layerIsOn("toggleResources")) {
-      toggleResources();
-      toggleResources();
-    }
+    redrawResourcesLayer();
     refreshResourcesEditor();
     exitResourcesCustomizationMode();
   }

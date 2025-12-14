@@ -67,12 +67,28 @@ A turn-based economy system with two new map layers:
 - Hover over tiles with Resources layer active to see resource name, icon, and amount
 - Hover over tiles with Economy layer active to see wealth, production, and trade values
 
+### Resources Editor
+- Access via Tools menu > Resources button (Shift+I shortcut)
+- View all resource types with statistics (tiles count, total amount)
+- Each resource has properties: popRequired (population for full output), maxOutput (max value)
+- Manual placement mode: click to place resources, Ctrl+click to remove
+- Brush tool for painting resources across multiple tiles
+- Regenerate all resources or specific resource types
+- Export resource data to CSV
+
+### Resource Types (16 total)
+- Food, Wood, Grain, Timber, Iron, Gold, Fish, Stone, Salt, Gems, Horses, Furs, Spices, Wine, Coal, Niter
+- Each resource has placement rules based on biomes, elevation, and terrain features
+- Coal: found in mountains and highlands (elevation 30-80)
+- Niter: found in dry/desert biomes (elevation 20-50)
+
 ### Key Files
-- `modules/resources-generator.js` - Resource distribution logic (15 resource types including Food, Wood, Grain, Timber, Iron, Gold, Fish, Stone, Salt, Gems, Horses, Furs, Spices, Wine)
+- `modules/resources-generator.js` - Resource distribution logic with 16 resource types
 - `modules/economy-generator.js` - Turn-based economy simulation with per-state resource stockpiles
 - `modules/renderers/draw-resources.js` - Resource layer rendering with toggleResources()
 - `modules/renderers/draw-economy.js` - Economy layer rendering with toggleEconomy()
 - `modules/ui/economy-editor.js` - Economy control panel showing state treasury and resource stockpiles
+- `modules/ui/resources-editor.js` - Resource Editor for viewing/placing/regenerating resources
 
 ## Notes
 - This is a client-side only application
