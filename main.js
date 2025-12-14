@@ -958,8 +958,10 @@ function generatePrecipitation() {
   const {cells, cellsX, cellsY} = grid;
   cells.prec = new Uint8Array(cells.i.length); // precipitation array
 
-  const cellsNumberModifier = (pointsInput.dataset.cells / 10000) ** 0.25;
-  const precInputModifier = precInput.value / 100;
+  const pointsEl = byId("pointsInput");
+  const precEl = byId("precInput");
+  const cellsNumberModifier = (pointsEl && pointsEl.dataset.cells ? pointsEl.dataset.cells / 10000 : 1) ** 0.25;
+  const precInputModifier = (precEl ? precEl.value : 100) / 100;
   const modifier = cellsNumberModifier * precInputModifier;
 
   const westerly = [];
