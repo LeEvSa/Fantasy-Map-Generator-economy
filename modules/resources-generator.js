@@ -2,37 +2,59 @@
 
 window.Resources = (function () {
   const RESOURCE_TYPES = {
-    food: {id: 13, name: "Food", color: "#e67e22", icon: "🍞", biomes: [5, 6, 7, 8], baseValue: 1, minHeight: 20, maxHeight: 50},
-    wood: {id: 14, name: "Wood", color: "#2d5016", icon: "🪵", biomes: [4, 5, 6, 8, 9], baseValue: 2, minHeight: 20, maxHeight: 70},
-    grain: {id: 1, name: "Grain", color: "#f4d03f", icon: "🌾", biomes: [5, 6, 7, 8], baseValue: 2, minHeight: 20, maxHeight: 50},
-    timber: {id: 2, name: "Timber", color: "#27ae60", icon: "🌲", biomes: [4, 5, 6, 8, 9], baseValue: 3, minHeight: 20, maxHeight: 70},
-    iron: {id: 3, name: "Iron", color: "#7f8c8d", icon: "⛏️", biomes: [3, 4, 5, 10, 11], baseValue: 8, minHeight: 40, maxHeight: 90},
-    gold: {id: 4, name: "Gold", color: "#f1c40f", icon: "💰", biomes: [3, 10, 11], baseValue: 25, minHeight: 50, maxHeight: 90},
-    fish: {id: 5, name: "Fish", color: "#3498db", icon: "🐟", biomes: [], baseValue: 3, coastal: true},
-    stone: {id: 6, name: "Stone", color: "#95a5a6", icon: "🪨", biomes: [3, 10, 11, 12], baseValue: 4, minHeight: 30, maxHeight: 100},
-    salt: {id: 7, name: "Salt", color: "#ecf0f1", icon: "🧂", biomes: [1, 2, 3], baseValue: 6, minHeight: 20, maxHeight: 40},
-    gems: {id: 8, name: "Gems", color: "#9b59b6", icon: "💎", biomes: [10, 11, 12], baseValue: 40, minHeight: 60, maxHeight: 100},
-    horses: {id: 9, name: "Horses", color: "#d35400", icon: "🐴", biomes: [5, 6, 7], baseValue: 15, minHeight: 20, maxHeight: 50},
-    furs: {id: 10, name: "Furs", color: "#8b4513", icon: "🦊", biomes: [4, 9, 10, 11], baseValue: 10, minHeight: 20, maxHeight: 80},
-    spices: {id: 11, name: "Spices", color: "#e74c3c", icon: "🌶️", biomes: [1, 2, 5], baseValue: 20, minHeight: 20, maxHeight: 40},
-    wine: {id: 12, name: "Wine", color: "#8e44ad", icon: "🍇", biomes: [5, 6, 7], baseValue: 12, minHeight: 20, maxHeight: 45}
+    food: {id: 13, name: "Food", color: "#e67e22", icon: "🍞", biomes: [5, 6, 7, 8], baseValue: 1, minHeight: 20, maxHeight: 50, popRequired: 50, maxOutput: 5},
+    wood: {id: 14, name: "Wood", color: "#2d5016", icon: "🪵", biomes: [4, 5, 6, 8, 9], baseValue: 2, minHeight: 20, maxHeight: 70, popRequired: 100, maxOutput: 8},
+    grain: {id: 1, name: "Grain", color: "#f4d03f", icon: "🌾", biomes: [5, 6, 7, 8], baseValue: 2, minHeight: 20, maxHeight: 50, popRequired: 100, maxOutput: 10},
+    timber: {id: 2, name: "Timber", color: "#27ae60", icon: "🌲", biomes: [4, 5, 6, 8, 9], baseValue: 3, minHeight: 20, maxHeight: 70, popRequired: 150, maxOutput: 12},
+    iron: {id: 3, name: "Iron", color: "#7f8c8d", icon: "⛏️", biomes: [3, 4, 5, 10, 11], baseValue: 8, minHeight: 50, maxHeight: 90, popRequired: 400, maxOutput: 30},
+    gold: {id: 4, name: "Gold", color: "#f1c40f", icon: "💰", biomes: [3, 10, 11], baseValue: 25, minHeight: 50, maxHeight: 90, popRequired: 500, maxOutput: 50},
+    fish: {id: 5, name: "Fish", color: "#3498db", icon: "🐟", biomes: [], baseValue: 3, coastal: true, popRequired: 50, maxOutput: 8},
+    stone: {id: 6, name: "Stone", color: "#95a5a6", icon: "🪨", biomes: [3, 10, 11, 12], baseValue: 4, minHeight: 40, maxHeight: 70, popRequired: 200, maxOutput: 15},
+    salt: {id: 7, name: "Salt", color: "#ecf0f1", icon: "🧂", biomes: [1, 2, 3], baseValue: 6, minHeight: 20, maxHeight: 40, popRequired: 150, maxOutput: 12},
+    gems: {id: 8, name: "Gems", color: "#9b59b6", icon: "💎", biomes: [10, 11, 12], baseValue: 40, minHeight: 60, maxHeight: 100, popRequired: 600, maxOutput: 60},
+    horses: {id: 9, name: "Horses", color: "#d35400", icon: "🐴", biomes: [5, 6, 7], baseValue: 15, minHeight: 20, maxHeight: 50, popRequired: 300, maxOutput: 20},
+    furs: {id: 10, name: "Furs", color: "#8b4513", icon: "🦊", biomes: [4, 9, 10, 11], baseValue: 10, minHeight: 20, maxHeight: 80, popRequired: 200, maxOutput: 15},
+    spices: {id: 11, name: "Spices", color: "#e74c3c", icon: "🌶️", biomes: [1, 2, 5], baseValue: 20, minHeight: 20, maxHeight: 40, popRequired: 250, maxOutput: 25},
+    wine: {id: 12, name: "Wine", color: "#8e44ad", icon: "🍇", biomes: [5, 6, 7], baseValue: 12, minHeight: 20, maxHeight: 45, popRequired: 200, maxOutput: 18},
+    coal: {id: 15, name: "Coal", color: "#2c3e50", icon: "�ite;", biomes: [3, 4, 10, 11], baseValue: 5, minHeight: 30, maxHeight: 80, popRequired: 300, maxOutput: 20},
+    niter: {id: 16, name: "Niter", color: "#bdc3c7", icon: "💨", biomes: [1, 2, 3], baseValue: 15, minHeight: 20, maxHeight: 50, popRequired: 250, maxOutput: 25}
   };
 
   function getResourceTypes() {
     return RESOURCE_TYPES;
   }
 
-  function generate() {
+  function generate(specificType = null) {
     TIME && console.time("generateResources");
     
     const {cells, burgs} = pack;
     const n = cells.i.length;
     
-    cells.resource = new Uint8Array(n);
-    cells.resourceAmount = new Float32Array(n);
+    if (!cells.resource) {
+      cells.resource = new Uint8Array(n);
+      cells.resourceAmount = new Float32Array(n);
+    }
+    
+    const typesToGenerate = specificType 
+      ? {[specificType]: RESOURCE_TYPES[specificType]}
+      : RESOURCE_TYPES;
+    
+    if (specificType) {
+      const resourceId = RESOURCE_TYPES[specificType].id;
+      for (let i = 0; i < n; i++) {
+        if (cells.resource[i] === resourceId) {
+          cells.resource[i] = 0;
+          cells.resourceAmount[i] = 0;
+        }
+      }
+    } else {
+      cells.resource = new Uint8Array(n);
+      cells.resourceAmount = new Float32Array(n);
+    }
     
     for (let i = 0; i < n; i++) {
       if (cells.h[i] < 20) continue;
+      if (specificType && cells.resource[i] !== 0) continue;
       
       const biome = cells.biome[i];
       const height = cells.h[i];
@@ -42,7 +64,7 @@ window.Resources = (function () {
       let bestResource = null;
       let bestScore = 0;
       
-      for (const [key, resource] of Object.entries(RESOURCE_TYPES)) {
+      for (const [key, resource] of Object.entries(typesToGenerate)) {
         let score = 0;
         
         if (resource.coastal && isCoastal) {
@@ -53,7 +75,7 @@ window.Resources = (function () {
           }
         }
         
-        if (hasRiver && ["grain", "timber"].includes(key)) {
+        if (hasRiver && ["grain", "timber", "food"].includes(key)) {
           score *= 1.3;
         }
         
@@ -69,18 +91,20 @@ window.Resources = (function () {
       }
     }
     
-    burgs.forEach((burg, i) => {
-      if (i === 0 || !burg.i) return;
-      const cell = burg.cell;
-      if (cells.resource[cell] === 0) {
-        const localResources = cells.c[cell].filter(c => cells.resource[c] > 0);
-        if (localResources.length > 0) {
-          const nearbyCell = localResources[Math.floor(Math.random() * localResources.length)];
-          cells.resource[cell] = cells.resource[nearbyCell];
-          cells.resourceAmount[cell] = cells.resourceAmount[nearbyCell] * 0.5;
+    if (!specificType) {
+      burgs.forEach((burg, i) => {
+        if (i === 0 || !burg.i) return;
+        const cell = burg.cell;
+        if (cells.resource[cell] === 0) {
+          const localResources = cells.c[cell].filter(c => cells.resource[c] > 0);
+          if (localResources.length > 0) {
+            const nearbyCell = localResources[Math.floor(Math.random() * localResources.length)];
+            cells.resource[cell] = cells.resource[nearbyCell];
+            cells.resourceAmount[cell] = cells.resourceAmount[nearbyCell] * 0.5;
+          }
         }
-      }
-    });
+      });
+    }
     
     TIME && console.timeEnd("generateResources");
   }
@@ -91,6 +115,13 @@ window.Resources = (function () {
 
   function getResourceByName(name) {
     return RESOURCE_TYPES[name.toLowerCase()] || null;
+  }
+
+  function getResourceKey(id) {
+    for (const [key, resource] of Object.entries(RESOURCE_TYPES)) {
+      if (resource.id === id) return key;
+    }
+    return null;
   }
 
   function getCellResources(cellId) {
@@ -134,13 +165,41 @@ window.Resources = (function () {
     return resources;
   }
 
+  function setResource(cellId, resourceKey, amount = 1) {
+    if (!pack.cells.resource) {
+      pack.cells.resource = new Uint8Array(pack.cells.i.length);
+      pack.cells.resourceAmount = new Float32Array(pack.cells.i.length);
+    }
+    
+    if (resourceKey === null || resourceKey === "none") {
+      pack.cells.resource[cellId] = 0;
+      pack.cells.resourceAmount[cellId] = 0;
+    } else {
+      const resource = RESOURCE_TYPES[resourceKey];
+      if (resource) {
+        pack.cells.resource[cellId] = resource.id;
+        pack.cells.resourceAmount[cellId] = amount;
+      }
+    }
+  }
+
+  function removeResource(cellId) {
+    if (pack.cells.resource) {
+      pack.cells.resource[cellId] = 0;
+      pack.cells.resourceAmount[cellId] = 0;
+    }
+  }
+
   return {
     generate,
     getResourceTypes,
     getResourceById,
     getResourceByName,
+    getResourceKey,
     getCellResources,
     getStateResources,
+    setResource,
+    removeResource,
     RESOURCE_TYPES
   };
 })();

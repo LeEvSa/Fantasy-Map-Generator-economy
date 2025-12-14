@@ -2060,6 +2060,13 @@
             >
               Economy
             </button>
+            <button
+              id="editResourcesButton"
+              data-tip="Click to open Resources Editor - place and manage resources"
+              data-shortcut="Shift + I"
+            >
+              Resources
+            </button>
             <button id="editEmblemButton" data-tip="Click to open Emblem Editor" data-shortcut="Shift + Y">
               Emblems
             </button>
@@ -4427,6 +4434,70 @@
           <button
             id="biomesExport"
             data-tip="Save biomes-related data as a text file (.csv)"
+            class="icon-download"
+          ></button>
+        </div>
+      </div>
+
+      <div id="resourcesEditor" class="dialog stable" style="display: none">
+        <div id="resourcesHeader" class="header" style="grid-template-columns: 2em 2em 6em 5em 6em 5em 5em 3em">
+          <div></div>
+          <div></div>
+          <div data-tip="Click to sort by resource name" class="sortable alphabetically" data-sortby="name">
+            Resource&nbsp;
+          </div>
+          <div
+            data-tip="Click to sort by tiles count"
+            class="sortable hide icon-sort-number-down"
+            data-sortby="cells"
+          >
+            Tiles&nbsp;
+          </div>
+          <div data-tip="Click to sort by total amount" class="sortable hide" data-sortby="amount">Amount&nbsp;</div>
+          <div data-tip="Click to sort by population required" class="sortable hide" data-sortby="poprequired">
+            Pop Req&nbsp;
+          </div>
+          <div data-tip="Click to sort by max output" class="sortable hide" data-sortby="maxoutput">Max&nbsp;</div>
+          <div></div>
+        </div>
+
+        <div id="resourcesBody" class="table" data-type="absolute"></div>
+
+        <div id="resourcesFooter" class="totalLine">
+          <div data-tip="Number of resource types" style="margin-left: 12px">
+            Types:&nbsp;<span id="resourcesFooterTypes">0</span>
+          </div>
+          <div data-tip="Total cells with resources" style="margin-left: 12px">
+            Cells:&nbsp;<span id="resourcesFooterCells">0</span>
+          </div>
+          <div data-tip="Total resource amount" style="margin-left: 12px">
+            Amount:&nbsp;<span id="resourcesFooterAmount">0</span>
+          </div>
+        </div>
+
+        <div id="resourcesBottom">
+          <button id="resourcesEditorRefresh" data-tip="Refresh the Editor" class="icon-cw"></button>
+          <button
+            id="resourcesManually"
+            data-tip="Manually place or remove resources on the map"
+            class="icon-brush"
+          ></button>
+          <div id="resourcesManuallyButtons" style="display: none">
+            <div data-tip="Change brush size. Shortcut: + to increase; - to decrease" style="margin-block: 0.3em">
+              Brush size:
+              <slider-input id="resourcesBrush" min="1" max="100" value="15"></slider-input>
+            </div>
+            <button id="resourcesManuallyApply" data-tip="Apply current changes" class="icon-check"></button>
+            <button id="resourcesManuallyCancel" data-tip="Cancel changes" class="icon-cancel"></button>
+          </div>
+          <button
+            id="resourcesRegenerate"
+            data-tip="Regenerate all resources based on terrain and biomes"
+            class="icon-arrows-cw"
+          ></button>
+          <button
+            id="resourcesExport"
+            data-tip="Save resources data as a text file (.csv)"
             class="icon-download"
           ></button>
         </div>
@@ -8209,5 +8280,6 @@
     <script defer src="modules/renderers/draw-economy.js?v=1.0.0"></script>
     <script defer src="modules/ui/economy-editor.js?v=1.0.0"></script>
     <script defer src="modules/ui/economy-overview.js?v=1.0.0"></script>
+    <script defer src="modules/ui/resources-editor.js?v=1.0.0"></script>
   </body>
 </html>
