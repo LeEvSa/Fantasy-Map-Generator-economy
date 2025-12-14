@@ -821,9 +821,15 @@ function openNearSeaLakes() {
 function defineMapSize() {
   const [size, latitude, longitude] = getSizeAndLatitude();
   const randomize = new URL(window.location.href).searchParams.get("options") === "default"; // ignore stored options
-  if (randomize || !locked("mapSize")) mapSizeOutput.value = mapSizeInput.value = size;
-  if (randomize || !locked("latitude")) latitudeOutput.value = latitudeInput.value = latitude;
-  if (randomize || !locked("longitude")) longitudeOutput.value = longitudeInput.value = longitude;
+  const mapSizeEl = byId("mapSizeOutput");
+  const mapSizeInEl = byId("mapSizeInput");
+  const latOutEl = byId("latitudeOutput");
+  const latInEl = byId("latitudeInput");
+  const lonOutEl = byId("longitudeOutput");
+  const lonInEl = byId("longitudeInput");
+  if ((randomize || !locked("mapSize")) && mapSizeEl && mapSizeInEl) mapSizeEl.value = mapSizeInEl.value = size;
+  if ((randomize || !locked("latitude")) && latOutEl && latInEl) latOutEl.value = latInEl.value = latitude;
+  if ((randomize || !locked("longitude")) && lonOutEl && lonInEl) lonOutEl.value = lonInEl.value = longitude;
 
   function getSizeAndLatitude() {
     const template = byId("templateInput").value; // heightmap template
