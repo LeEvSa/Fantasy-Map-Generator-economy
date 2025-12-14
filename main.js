@@ -884,9 +884,12 @@ function defineMapSize() {
 
 // calculate map position on globe
 function calculateMapCoordinates() {
-  const sizeFraction = +byId("mapSizeOutput").value / 100;
-  const latShift = +byId("latitudeOutput").value / 100;
-  const lonShift = +byId("longitudeOutput").value / 100;
+  const mapSizeEl = byId("mapSizeOutput");
+  const latEl = byId("latitudeOutput");
+  const lonEl = byId("longitudeOutput");
+  const sizeFraction = mapSizeEl ? +mapSizeEl.value / 100 : 0.5;
+  const latShift = latEl ? +latEl.value / 100 : 0.5;
+  const lonShift = lonEl ? +lonEl.value / 100 : 0.5;
 
   const latT = rn(sizeFraction * 180, 1);
   const latN = rn(90 - (180 - latT) * latShift, 1);
