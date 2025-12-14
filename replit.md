@@ -47,8 +47,25 @@ A turn-based economy system with two new map layers:
 - Access via openEconomyEditor() function
 - Advance turns to simulate economic changes
 - View global statistics (total wealth, production, trade volume)
-- See state-by-state economic breakdown
+- See state-by-state economic breakdown with resource stockpiles
 - Review resource distribution across the map
+- "Global Overview" button opens detailed nation economy table
+
+### Global Economy Overview
+- Access via "Global Overview" button in Economy Editor or openEconomyOverview()
+- Table showing all nations with: Name, Cities, Population, Resources, Money/Turn
+- Sortable by population, shows treasury per nation
+- Resource columns display top 8 resources across all nations
+
+### Economy Layer Visualization
+- Resource flows: Lines from resource tiles to nearest city (colored by resource type)
+- City flows: Lines from cities to their capital (colored by state color)
+- Capital markers: Gold circles indicate nation capitals
+- Wealth heatmap: Red gradient showing cell wealth distribution
+
+### Tooltips
+- Hover over tiles with Resources layer active to see resource name, icon, and amount
+- Hover over tiles with Economy layer active to see wealth, production, and trade values
 
 ### Key Files
 - `modules/resources-generator.js` - Resource distribution logic (15 resource types including Food, Wood, Grain, Timber, Iron, Gold, Fish, Stone, Salt, Gems, Horses, Furs, Spices, Wine)
