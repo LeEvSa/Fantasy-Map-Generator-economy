@@ -605,7 +605,7 @@ function randomizeOptions() {
   if (randomize || !locked("temperatureEquator")) options.temperatureEquator = gauss(25, 7, 20, 35, 0);
   if (randomize || !locked("temperatureNorthPole")) options.temperatureNorthPole = gauss(-25, 7, -40, 10, 0);
   if (randomize || !locked("temperatureSouthPole")) options.temperatureSouthPole = gauss(-15, 7, -40, 10, 0);
-  if (randomize || !locked("prec")) precInput.value = precOutput.value = gauss(100, 40, 5, 500);
+  if ((randomize || !locked("prec")) && typeof precInput !== "undefined" && precInput) precInput.value = precOutput.value = gauss(100, 40, 5, 500);
 
   // 'Units Editor' settings
   const US = navigator.language === "en-US";
