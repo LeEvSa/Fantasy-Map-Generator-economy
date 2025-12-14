@@ -1225,18 +1225,20 @@ function showStatistics() {
   const heightmapType = isTemplate ? "template" : "precreated";
   const isRandomTemplate = isTemplate && !locked("template") ? "random " : "";
 
+  const mapSizeEl = byId("mapSizeOutput");
+  const culturesSetEl = byId("culturesSet");
   const stats = `  Seed: ${seed}
     Canvas size: ${graphWidth}x${graphHeight} px
     Heightmap: ${heightmap}
     Template: ${isRandomTemplate}${heightmapType}
     Points: ${grid.points.length}
     Cells: ${pack.cells.i.length}
-    Map size: ${mapSizeOutput.value}%
+    Map size: ${mapSizeEl ? mapSizeEl.value : "N/A"}%
     States: ${pack.states.length - 1}
     Provinces: ${pack.provinces.length - 1}
     Burgs: ${pack.burgs.length - 1}
     Religions: ${pack.religions.length - 1}
-    Culture set: ${culturesSet.value}
+    Culture set: ${culturesSetEl ? culturesSetEl.value : "N/A"}
     Cultures: ${pack.cultures.length - 1}`;
 
   mapId = Date.now(); // unique map id is it's creation date number
