@@ -102,6 +102,10 @@ function prepareMapData() {
   const cellRoutes = JSON.stringify(pack.cells.routes);
   const routes = JSON.stringify(pack.routes);
   const zones = JSON.stringify(pack.zones);
+  
+  const resourceData = pack.cells.resource ? Array.from(pack.cells.resource) : [];
+  const resourceAmounts = pack.cells.resourceAmount ? Array.from(pack.cells.resourceAmount).map(a => rn(a, 2)) : [];
+  const economyData = typeof Economy !== 'undefined' && Economy.getEconomyData ? JSON.stringify(Economy.getEconomyData()) : "null";
 
   // store name array only if not the same as default
   const defaultNB = Names.getNameBases();
@@ -155,7 +159,10 @@ function prepareMapData() {
     markers,
     cellRoutes,
     routes,
-    zones
+    zones,
+    resourceData,
+    resourceAmounts,
+    economyData
   ].join("\r\n");
   return mapData;
 }

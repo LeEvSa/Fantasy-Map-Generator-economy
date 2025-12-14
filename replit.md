@@ -27,7 +27,38 @@ node server.js
 - TinyMCE for rich text editing
 - jQuery/jQuery UI for some UI components
 
+## Economy System (Custom Extension)
+A turn-based economy system with two new map layers:
+
+### Resource Layer
+- Shows natural resources distributed across the map
+- Resources include: Grain, Timber, Iron, Gold, Fish, Stone, Salt, Gems, Horses, Furs, Spices, Wine
+- Resources are assigned based on biome, terrain height, and geographic features
+- Toggle via "Resources" button in the Layers panel
+
+### Economy Layer  
+- Visualizes wealth distribution and trade flows
+- Shows cell wealth as color gradient (red = wealthier)
+- Displays trade routes between burgs as connecting lines
+- Trade flow indicators show active trade nodes
+- Toggle via "Economy" button in the Layers panel
+
+### Economy Editor
+- Access via openEconomyEditor() function
+- Advance turns to simulate economic changes
+- View global statistics (total wealth, production, trade volume)
+- See state-by-state economic breakdown
+- Review resource distribution across the map
+
+### Key Files
+- `modules/resources-generator.js` - Resource distribution logic
+- `modules/economy-generator.js` - Turn-based economy simulation
+- `modules/renderers/draw-resources.js` - Resource layer rendering
+- `modules/renderers/draw-economy.js` - Economy layer rendering  
+- `modules/ui/economy-editor.js` - Economy control panel UI
+
 ## Notes
 - This is a client-side only application
 - No database or backend API required
 - Maps are generated and processed entirely in the browser
+- Economy and resource data is saved/loaded with map files

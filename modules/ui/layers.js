@@ -209,6 +209,8 @@ function drawLayers() {
   if (layerIsOn("toggleBurgIcons")) drawBurgIcons();
   if (layerIsOn("toggleMilitary")) drawMilitary();
   if (layerIsOn("toggleMarkers")) drawMarkers();
+  if (layerIsOn("toggleResources")) drawResources();
+  if (layerIsOn("toggleEconomy")) drawEconomy();
   if (layerIsOn("toggleRulers")) rulers.draw();
   // scale bar
   // vignette
@@ -1037,5 +1039,7 @@ function getLayer(id) {
   if (id === "toggleLabels") return $("#labels");
   if (id === "toggleBurgIcons") return $("#icons");
   if (id === "toggleMarkers") return $("#markers");
+  if (id === "toggleResources") return $("#resources");
+  if (id === "toggleEconomy") return $("#economy");
   if (id === "toggleRulers") return $("#ruler");
 }

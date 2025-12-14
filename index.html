@@ -679,6 +679,22 @@
               Mar<u>k</u>ers
             </li>
             <li
+              id="toggleResources"
+              data-tip="Resources: shows natural resources in each tile. Click to toggle."
+              class="buttonoff"
+              onclick="toggleResources(event)"
+            >
+              Resources
+            </li>
+            <li
+              id="toggleEconomy"
+              data-tip="Economy: shows wealth and trade flows. Click to toggle."
+              class="buttonoff"
+              onclick="toggleEconomy(event)"
+            >
+              Economy
+            </li>
+            <li
               id="toggleRulers"
               data-tip="Rulers: click to toggle, drag to move, click on label to delete. Ctrl + click to edit layer style"
               data-shortcut="= (equal sign)"
@@ -8180,5 +8196,10 @@
     <script defer src="modules/renderers/draw-burg-labels.js?v=1.108.1"></script>
     <script defer src="modules/renderers/draw-burg-icons.js?v=1.104.0"></script>
     <script defer src="modules/renderers/draw-relief-icons.js?v=1.108.4"></script>
+    <script defer src="modules/resources-generator.js?v=1.0.0"></script>
+    <script defer src="modules/economy-generator.js?v=1.0.0"></script>
+    <script defer src="modules/renderers/draw-resources.js?v=1.0.0"></script>
+    <script defer src="modules/renderers/draw-economy.js?v=1.0.0"></script>
+    <script defer src="modules/ui/economy-editor.js?v=1.0.0"></script>
   </body>
 </html>

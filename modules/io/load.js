@@ -406,6 +406,16 @@ async function parseLoadedData(data, mapVersion) {
       pack.cells.province = data[27] ? Uint16Array.from(data[27].split(",")) : new Uint16Array(pack.cells.i.length);
       // data[28] had deprecated cells.crossroad
       pack.cells.routes = data[36] ? JSON.parse(data[36]) : {};
+      
+      if (data[39] && data[39].length > 2) {
+        pack.cells.resource = Uint8Array.from(data[39].split(","));
+      }
+      if (data[40] && data[40].length > 2) {
+        pack.cells.resourceAmount = Float32Array.from(data[40].split(","));
+      }
+      if (data[41] && data[41] !== "null" && typeof Economy !== 'undefined' && Economy.loadEconomyData) {
+        Economy.loadEconomyData(data[41]);
+      }
 
       if (data[31]) {
         const namesDL = data[31].split("/");
