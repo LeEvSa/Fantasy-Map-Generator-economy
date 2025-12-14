@@ -54,6 +54,7 @@ function handleKeyup(event) {
   else if (shift && code === "KeyM") overviewMilitary();
   else if (shift && code === "KeyK") overviewMarkers();
   else if (shift && code === "KeyE") viewCellDetails();
+  else if (shift && code === "KeyG") openEconomyEditor();
   else if (key === "!") toggleAddBurg();
   else if (key === "@") toggleAddLabel();
   else if (key === "#") toggleAddRiver();
