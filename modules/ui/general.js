@@ -242,6 +242,16 @@ function showMapTooltip(point, e, i, g) {
     const culture = pack.cells.culture[i];
     tip("Culture: " + pack.cultures[culture].name);
     if (document.getElementById("culturesEditor")?.offsetParent) highlightEditorLine(culturesEditor, culture);
+  } else if (layerIsOn("toggleResources") && pack.cells.resource && pack.cells.resource[i]) {
+    const resourceData = Resources.getCellResources(i);
+    if (resourceData) {
+      tip(`${resourceData.icon} ${resourceData.name}: ${resourceData.amount.toFixed(1)} units`);
+    }
+  } else if (layerIsOn("toggleEconomy") && pack.cells.wealth && pack.cells.wealth[i]) {
+    const cellEconomy = Economy.getCellEconomy(i);
+    if (cellEconomy) {
+      tip(`Wealth: ${Math.round(cellEconomy.wealth)} | Production: ${Math.round(cellEconomy.production)} | Trade: ${Math.round(cellEconomy.trade)}`);
+    }
   } else if (layerIsOn("toggleHeight")) tip("Height: " + getFriendlyHeight(point));
 }
 

@@ -104,6 +104,8 @@ window.Economy = (function () {
       };
     });
     
+    calculateResourceFlows();
+    calculateCityToCapitalFlows();
     calculateTradeRoutes();
     
     economyData.totalWealth = Array.from(cells.wealth).reduce((a, b) => a + b, 0);
@@ -112,6 +114,120 @@ window.Economy = (function () {
     currentTurn = 0;
     
     TIME && console.timeEnd("initializeEconomy");
+  }
+
+  function calculateResourceFlows() {
+    if (!economyData) return;
+    
+    const {cells, burgs} = pack;
+    const n = cells.i.length;
+    const resourceFlows = [];
+    
+    cells.nearestBurg = new Uint16Array(n);
+    
+    const validBurgs = burgs.filter((b, i) => i > 0 && b.i && b.cell);
+    
+    for (let i = 0; i < n; i++) {
+      if (cells.h[i] < 20) continue;
+      
+      const resourceId = cells.resource ? cells.resource[i] : 0;
+      const resourceAmount = cells.resourceAmount ? cells.resourceAmount[i] : 0;
+      if (!resourceId || resourceAmount <= 0) continue;
+      
+      const cellState = cells.state[i];
+      const [cx, cy] = cells.p[i];
+      
+      let nearestBurg = null;
+      let nearestDist = Infinity;
+      
+      for (const burg of validBurgs) {
+        if (cellState > 0 && cells.state[burg.cell] !== cellState) continue;
+        
+        const [bx, by] = cells.p[burg.cell];
+        const dist = Math.sqrt((bx - cx) ** 2 + (by - cy) ** 2);
+        
+        if (dist < nearestDist) {
+          nearestDist = dist;
+          nearestBurg = burg;
+        }
+      }
+      
+      if (!nearestBurg && validBurgs.length > 0) {
+        for (const burg of validBurgs) {
+          const [bx, by] = cells.p[burg.cell];
+          const dist = Math.sqrt((bx - cx) ** 2 + (by - cy) ** 2);
+          if (dist < nearestDist) {
+            nearestDist = dist;
+            nearestBurg = burg;
+          }
+        }
+      }
+      
+      if (nearestBurg && nearestDist < graphWidth * 0.2) {
+        cells.nearestBurg[i] = nearestBurg.i;
+        
+        resourceFlows.push({
+          fromCell: i,
+          toBurg: nearestBurg.i,
+          toBurgCell: nearestBurg.cell,
+          resourceId: resourceId,
+          amount: resourceAmount,
+          distance: nearestDist
+        });
+        
+        if (economyData.burgs[nearestBurg.i]) {
+          economyData.burgs[nearestBurg.i].tradeVolume += resourceAmount;
+        }
+      }
+    }
+    
+    economyData.resourceFlows = resourceFlows;
+  }
+
+  function calculateCityToCapitalFlows() {
+    if (!economyData) return;
+    
+    const {cells, burgs, states} = pack;
+    const cityFlows = [];
+    
+    for (const state of states) {
+      if (!state || !state.i) continue;
+      
+      const capitalBurgId = state.capital;
+      const capitalBurg = burgs[capitalBurgId];
+      if (!capitalBurg || !capitalBurg.cell) continue;
+      
+      const stateBurgs = burgs.filter((b, i) => 
+        i > 0 && b.i && b.cell && 
+        cells.state[b.cell] === state.i && 
+        b.i !== capitalBurgId
+      );
+      
+      for (const burg of stateBurgs) {
+        const burgData = economyData.burgs[burg.i];
+        if (!burgData) continue;
+        
+        const pop = burg.population || cells.pop[burg.cell] || 1;
+        const flowValue = burgData.wealth * 0.1 + pop * 2;
+        
+        const [x1, y1] = cells.p[burg.cell];
+        const [x2, y2] = cells.p[capitalBurg.cell];
+        const distance = Math.sqrt((x2 - x1) ** 2 + (y2 - y1) ** 2);
+        
+        cityFlows.push({
+          fromBurg: burg.i,
+          fromBurgCell: burg.cell,
+          toBurg: capitalBurgId,
+          toBurgCell: capitalBurg.cell,
+          stateId: state.i,
+          value: flowValue,
+          population: pop,
+          distance: distance
+        });
+      }
+    }
+    
+    economyData.cityFlows = cityFlows;
   }
 
   function calculateTradeRoutes() {

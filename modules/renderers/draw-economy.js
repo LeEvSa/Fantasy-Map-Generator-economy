@@ -73,48 +73,72 @@ function drawEconomy() {
   }
   svgContent += '</g>';
   
-  if (economyData && economyData.tradeRoutes && economyData.tradeRoutes.length > 0) {
-    svgContent += '<g id="economy-trade" class="economy-trade">';
+  if (economyData && economyData.resourceFlows && economyData.resourceFlows.length > 0) {
+    svgContent += '<g id="economy-resource-flows" class="economy-resource-flows">';
     
-    const maxTradeValue = Math.max(...economyData.tradeRoutes.map(r => r.value));
+    const maxAmount = Math.max(...economyData.resourceFlows.map(r => r.amount));
     
-    for (const route of economyData.tradeRoutes) {
-      const burg1 = burgs[route.from];
-      const burg2 = burgs[route.to];
+    for (const flow of economyData.resourceFlows) {
+      const [x1, y1] = cells.p[flow.fromCell];
+      const [x2, y2] = cells.p[flow.toBurgCell];
       
-      if (!burg1 || !burg2 || !burg1.cell || !burg2.cell) continue;
+      if (!x1 || !y1 || !x2 || !y2) continue;
       
-      const [x1, y1] = cells.p[burg1.cell];
-      const [x2, y2] = cells.p[burg2.cell];
+      const normalizedAmount = flow.amount / maxAmount;
+      const strokeWidth = 0.2 + normalizedAmount * 0.8;
+      const opacity = 0.15 + normalizedAmount * 0.25;
       
-      const normalizedValue = route.value / maxTradeValue;
-      const strokeWidth = 0.5 + normalizedValue * 2;
-      const opacity = 0.3 + normalizedValue * 0.5;
+      const resource = Resources.getResourceById(flow.resourceId);
+      const color = resource ? resource.color : "#95a5a6";
       
       svgContent += `<line 
         x1="${x1}" y1="${y1}" 
         x2="${x2}" y2="${y2}" 
-        stroke="#f39c12" 
+        stroke="${color}" 
         stroke-width="${strokeWidth}" 
         stroke-opacity="${opacity}"
-        stroke-linecap="round"
-        stroke-dasharray="${route.sameState ? 'none' : '3,2'}"/>`;
+        stroke-linecap="round"/>`;
     }
     svgContent += '</g>';
   }
   
-  svgContent += '<g id="economy-flows" class="economy-flows">';
+  if (economyData && economyData.cityFlows && economyData.cityFlows.length > 0) {
+    svgContent += '<g id="economy-city-flows" class="economy-city-flows">';
+    
+    const maxCityValue = Math.max(...economyData.cityFlows.map(f => f.value));
+    
+    for (const flow of economyData.cityFlows) {
+      const [x1, y1] = cells.p[flow.fromBurgCell];
+      const [x2, y2] = cells.p[flow.toBurgCell];
+      
+      if (!x1 || !y1 || !x2 || !y2) continue;
+      
+      const normalizedValue = flow.value / maxCityValue;
+      const strokeWidth = 0.8 + normalizedValue * 2.5;
+      const opacity = 0.4 + normalizedValue * 0.4;
+      
+      const state = pack.states[flow.stateId];
+      const stateColor = state && state.color ? state.color : "#f39c12";
+      
+      svgContent += `<line 
+        x1="${x1}" y1="${y1}" 
+        x2="${x2}" y2="${y2}" 
+        stroke="${stateColor}" 
+        stroke-width="${strokeWidth}" 
+        stroke-opacity="${opacity}"
+        stroke-linecap="round"/>`;
+    }
+    svgContent += '</g>';
+  }
   
-  for (let i = 0; i < cells.i.length; i++) {
-    const trade = cells.trade[i];
-    if (!trade || trade < 1) continue;
+  svgContent += '<g id="economy-capitals" class="economy-capitals">';
+  for (const burg of burgs) {
+    if (!burg || !burg.i || !burg.cell || !burg.capital) continue;
     
-    const [x, y] = cells.p[i];
-    const radius = Math.min(3, 0.5 + trade * 0.1);
-    
-    svgContent += `<circle cx="${x}" cy="${y}" r="${radius}" 
-      fill="#2ecc71" fill-opacity="0.6" 
-      stroke="#27ae60" stroke-width="0.2"/>`;
+    const [x, y] = cells.p[burg.cell];
+    svgContent += `<circle cx="${x}" cy="${y}" r="3" 
+      fill="gold" fill-opacity="0.8" 
+      stroke="#c9a227" stroke-width="0.5"/>`;
   }
   svgContent += '</g>';
   

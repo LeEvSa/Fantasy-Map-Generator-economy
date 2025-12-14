@@ -22,9 +22,10 @@ function openEconomyEditor() {
       <div class="dialog-content" style="padding: 10px; max-height: 400px; overflow-y: auto;">
         <div style="margin-bottom: 15px; padding: 10px; background: #f5f5f5; border-radius: 5px;">
           <h4 style="margin: 0 0 10px 0;">Turn-Based Economy</h4>
-          <div style="display: flex; align-items: center; gap: 10px;">
+          <div style="display: flex; align-items: center; gap: 10px; flex-wrap: wrap;">
             <span>Current Turn: <strong id="economyCurrentTurn">${currentTurn}</strong></span>
             <button id="economyAdvanceTurn" style="padding: 5px 15px;">Advance Turn</button>
+            <button id="economyOpenOverview" style="padding: 5px 15px; background: #3498db; color: white; border: none; border-radius: 3px; cursor: pointer;">Global Overview</button>
           </div>
         </div>
         
@@ -68,6 +69,10 @@ function openEconomyEditor() {
   
   document.getElementById("economyEditorClose").onclick = closeEconomyEditor;
   document.getElementById("economyAdvanceTurn").onclick = handleAdvanceTurn;
+  document.getElementById("economyOpenOverview").onclick = function() {
+    closeEconomyEditor();
+    openEconomyOverview();
+  };
 }
 
 function getGlobalStatsHtml(economyData) {
