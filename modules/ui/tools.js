@@ -27,6 +27,12 @@ toolsContent.addEventListener("click", function (event) {
   else if (button === "overviewMilitaryButton") overviewMilitary();
   else if (button === "overviewMarkersButton") overviewMarkers();
   else if (button === "overviewCellsButton") viewCellDetails();
+  else if (button === "editEconomyButton") {
+    if (typeof EconomyUI !== "undefined") {
+      EconomyUI.initialize();
+      EconomyUI.toggle();
+    }
+  }
 
   // click on Regenerate buttons
   if (event.target.parentNode.id === "regenerateFeature") {
