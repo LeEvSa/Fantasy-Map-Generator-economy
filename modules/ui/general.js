@@ -492,6 +492,7 @@ function unlock(id) {
 // check if option is locked
 function locked(id) {
   const lockEl = document.getElementById("lock_" + id);
+  if (!lockEl) return false;
   return lockEl.dataset.locked === "1";
 }
 
