@@ -51,11 +51,11 @@ A turn-based economy system with two new map layers:
 - Review resource distribution across the map
 
 ### Key Files
-- `modules/resources-generator.js` - Resource distribution logic
-- `modules/economy-generator.js` - Turn-based economy simulation
-- `modules/renderers/draw-resources.js` - Resource layer rendering
-- `modules/renderers/draw-economy.js` - Economy layer rendering  
-- `modules/ui/economy-editor.js` - Economy control panel UI
+- `modules/resources-generator.js` - Resource distribution logic (15 resource types including Food, Wood, Grain, Timber, Iron, Gold, Fish, Stone, Salt, Gems, Horses, Furs, Spices, Wine)
+- `modules/economy-generator.js` - Turn-based economy simulation with per-state resource stockpiles
+- `modules/renderers/draw-resources.js` - Resource layer rendering with toggleResources()
+- `modules/renderers/draw-economy.js` - Economy layer rendering with toggleEconomy()
+- `modules/ui/economy-editor.js` - Economy control panel showing state treasury and resource stockpiles
 
 ## Notes
 - This is a client-side only application
